@@ -1,0 +1,97 @@
+
+// NEW Entities
+
+//////// DOC TEMPLATE
+entity DocumentationTemplateB {
+    shippingType ShippingType required,
+    title String required,
+    forClient Boolean required,
+    forProvider Boolean required,
+    deleted Boolean required
+}
+
+
+//// ENVIO DOCUMENTACION CLIENTE
+entity DocumentationSendConfB {
+    documentationType DocumentationType required,
+ 	sendDocumentation Boolean required,
+    executionTypeDoc ExecutionTypeDocumentation required,
+	periodicity Periodicity,
+    monday Boolean,
+    tuesday Boolean,
+    wednesday Boolean,
+    thursday Boolean,
+    friday Boolean,
+    saturday Boolean,
+    sunday Boolean,
+    dayOfMonth Integer,
+    daysOfAnteriority Integer,
+    includeAgencyInformation Boolean,
+    includeValoration Boolean,
+    contactName String required,
+    email String,
+    fax String,
+    ftpServer String,
+    shippingType ShippingType required,
+    shippingChannel ShippingChannel required,
+    format FormatDocumentation required,
+    deleted Boolean required
+}
+relationship ManyToOne {
+    DocumentationSendConfB{crmSupplierJetUS(name)} to CRMSupplierJetUS,
+    DocumentationSendConfB{serviceTypeB(name)} to ServiceTypeB,
+	DocumentationSendConfB{cialInterlocutorJet(name)} to CialInterlocutorJet,
+    DocumentationSendConfB{agencyGroupUS(name)} to AgencyGroupUS,
+    DocumentationSendConfB{language(name)} to Language,
+    DocumentationSendConfB{documentationTemplateB(title)} to DocumentationTemplateB
+}
+
+entity DocumentationSendConfDefaultB {
+    documentationType DocumentationType required,
+ 	sendDocumentation Boolean required,
+    executionTypeDoc ExecutionTypeDocumentation required,
+	periodicity Periodicity,
+    monday Boolean,
+    tuesday Boolean,
+    wednesday Boolean,
+    thursday Boolean,
+    friday Boolean,
+    saturday Boolean,
+    sunday Boolean,
+    dayOfMonth Integer,
+    daysOfAnteriority Integer,
+    includeAgencyInformation Boolean,
+    includeValoration Boolean,
+    shippingType ShippingType required,
+    shippingChannel ShippingChannel required,
+    format FormatDocumentation required
+}
+
+relationship ManyToOne {
+ 	DocumentationSendConfDefaultB{language(name)} to Language,
+    DocumentationSendConfDefaultB{documentationTemplateB(title)} to DocumentationTemplateB
+}
+
+enum ExecutionTypeDocumentation
+{ IMMEDIATE,
+PREIODIC, ANTERIORITY }
+
+enum Periodicity
+{ DAILY, WEEKLY, BIWEEKLY, MONTHLY }
+
+enum ShippingType
+{ INDIVIDUAL,
+LIST }
+
+enum ShippingChannel
+{ EMAIL, FAX, FTP }
+
+enum FormatDocumentation
+{ HTML, PDF, CSV, EXCEL }
+
+enum DocumentationType{
+CLIENT, PROVIDER
+}
+
+paginate * with pagination
+service * with serviceClass
